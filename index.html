@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="stylesheet.css" />
+  <title>Mobile Devices (Work and Personal)</title>
+
+</head>
+
+<body>
+	<div class="video">
+	<video controls autoplay width="640" height="480">
+		<source src="Módulo 4_Mobile Devices (Work and Personal).mp4" type="video/mp4" />
+	</video>
+</div>
+    <div class="preguntasportema"> 
+<fieldset>
+	<legend>Cuestionario Dispositivos Móviles</legend>
+	<div id="test">
+		<div class="cuestion">1. Seleccione un punto que se debe abarcar a la hora de proteger la informaci&oacute;n en un dispositivo m&oacute;vil:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="0" value="a">&nbsp;a : Copias de seguridad.&nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="b">&nbsp;b : Instalar aplicaciones a criterio del usuario. &nbsp;</label>
+			<label>
+				<input type="radio" name="0" value="c">&nbsp;c : Libre almacenamiento de datos. &nbsp;</label>
+		</div>
+		<div class="cuestion">2. Un caso de uso de dispositivos m&oacute;viles corresponde a:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="1" value="a">&nbsp;a : Uso personal. &nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="b">&nbsp;b : Uso corporativo de alta seguridad. &nbsp;</label>
+			<label>
+				<input type="radio" name="1" value="c">&nbsp;c : Geolocalizaci&oacute;n. &nbsp;</label>
+		</div>
+		<div class="cuestion">3. Seleccione una herramienta de gesti&oacute;n de dispositivos m&oacute;viles:</div>
+		<div class="respuestas">
+			<label>
+				<input type="radio" name="2" value="a">&nbsp;a : Bloqueo parcial.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="b">&nbsp;b : Detecci&oacute;n facial.&nbsp;</label>
+			<label>
+				<input type="radio" name="2" value="c">&nbsp;c : Formateo remoto. &nbsp;</label>
+		</div>
+	</div>
+	<button id="boton">Mostrar resultado</button>
+	<div id="resultado">
+		<br>
+	</div>
+	<script>
+		const contenedor = document.getElementById("test");
+		const botonRes = document.getElementById("boton");
+		const resultadoTest = document.getElementById("resultado");
+
+		const preguntas = [
+			{
+				pregunta: "1. Seleccione un punto que se debe abarcar a la hora de proteger la información en un dispositivo móvil:",
+				respuestas:
+				{
+					a: "Copias de seguridad.",
+					b: "Instalar aplicaciones a criterio del usuario.",
+					c: "Libre almacenamiento de datos.",
+				},
+				respuestaCorrecta: "a",
+			},
+			{
+				pregunta: "2. Un caso de uso de dispositivos móviles corresponde a:",
+				respuestas:
+				{
+					a: "Uso personal.",
+					b: "Uso corporativo de alta seguridad.",
+					c: "Geolocalización.",
+				},
+				respuestaCorrecta: "b",
+			},
+			{
+				pregunta: "3. Seleccione una herramienta de gestión de dispositivos móviles:",
+				respuestas:
+				{
+					a: "Bloqueo parcial.",
+					b: "Detección facial.",
+					c: "Formateo remoto.",
+				},
+				respuestaCorrecta: "c",
+			},
+
+		];
+
+		function mostrarTest()
+		{
+			const preguntasYrespuestas = [];
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+
+				const respuestas = [];
+
+				for (letraRespuesta in preguntaActual.respuestas)
+				{
+
+					respuestas.push(
+
+						`
+        <label>
+                  <input type="radio" name="${numeroDePregunta}" value="${letraRespuesta}" />
+                  ${letraRespuesta} : ${preguntaActual.respuestas[letraRespuesta]} <br>
+              </label>` 
+					);
+                   
+				}
+
+				preguntasYrespuestas.push(
+					`
+      <div class="cuestion">${preguntaActual.pregunta}</div>
+      
+          <div class="respuestas"> ${respuestas.join("")} </div>
+          `
+				);
+			});
+
+			contenedor.innerHTML = preguntasYrespuestas.join("");
+		}
+
+		mostrarTest();
+
+		function mostrarResultado()
+		{
+			const respuestas = contenedor.querySelectorAll(".respuestas");
+			let respuestasCorrectas = 0;
+
+			preguntas.forEach((preguntaActual, numeroDePregunta) =>
+			{
+				const todasLasRespuestas = respuestas[numeroDePregunta];
+				const checkboxRespuestas = `input[name='${numeroDePregunta}']:checked`;
+				const respuestaElegida = (
+					todasLasRespuestas.querySelector(checkboxRespuestas) ||
+					{}
+				).value;
+
+				if (respuestaElegida === preguntaActual.respuestaCorrecta)
+				{
+					respuestasCorrectas++;
+
+					respuestas[numeroDePregunta].style.color = "blue";
+				}
+				else
+				{
+					respuestas[numeroDePregunta].style.color = "red";
+				}
+			});
+
+			resultadoTest.innerHTML =
+				"Usted ha acertado " +
+				respuestasCorrectas +
+				" preguntas de un total de " +
+				preguntas.length;
+		}
+
+		botonRes.addEventListener("click", mostrarResultado);
+
+	</script>
+       </div>
+
+</fieldset>
+</body>
+</html>
